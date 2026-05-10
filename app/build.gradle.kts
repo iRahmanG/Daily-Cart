@@ -51,4 +51,12 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
+
+    // ViewModel & LiveData
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+
+    // UI & Navigation
+    implementation(libs.material.v1110)
+    implementation(libs.androidx.constraintlayout.v214)
 }

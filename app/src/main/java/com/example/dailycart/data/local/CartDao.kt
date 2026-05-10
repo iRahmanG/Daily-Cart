@@ -14,12 +14,12 @@ interface CartDao {
     fun getAllCartItems(): LiveData<List<CartItem>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addToCart(cartItem: CartItem)
+    suspend fun insert(cartItem: CartItem)
 
     @Delete
-    suspend fun removeFromCart(cartItem: CartItem)
+    suspend fun delete(cartItem: CartItem)
 
     @Update
-    suspend fun updateQuantity(cartItem: CartItem)
+    suspend fun update(cartItem: CartItem)
 
 }
