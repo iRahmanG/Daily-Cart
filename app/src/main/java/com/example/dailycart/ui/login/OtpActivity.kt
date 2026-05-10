@@ -2,14 +2,11 @@ package com.example.dailycart.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.dailycart.R
 import com.example.dailycart.databinding.ActivityOtpBinding
-import com.example.dailycart.ui.home.HomeActivity
+import com.example.dailycart.ui.home.HomeFragment
 import kotlin.jvm.java
 
 class OtpActivity : AppCompatActivity() {
@@ -46,7 +43,7 @@ class OtpActivity : AppCompatActivity() {
         viewModel.loginState.observe(this) { state ->
             when (state) {
                 is LoginViewModel.LoginState.Success -> {
-                    val intent = Intent(this, HomeActivity::class.java)
+                    val intent = Intent(this, HomeFragment::class.java)
                     startActivity(intent)
                     finishAffinity() // Modern practice for login completion
                 }
