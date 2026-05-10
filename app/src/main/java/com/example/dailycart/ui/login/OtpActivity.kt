@@ -9,13 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.dailycart.R
 import com.example.dailycart.databinding.ActivityOtpBinding
+import com.example.dailycart.ui.home.HomeActivity
 import kotlin.jvm.java
 
 class OtpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOtpBinding
     private lateinit var viewModel: LoginViewModel
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

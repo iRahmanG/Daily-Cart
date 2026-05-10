@@ -1,20 +1,25 @@
 package com.example.dailycart.utils
 
+import com.example.dailycart.R
+import com.example.dailycart.data.model.Category
 import com.example.dailycart.data.model.Product
 
 object Constants {
-    const val FAKE_OTP = "1234"
-
-    fun getMOckProducts(): List<Product>{
+    fun getCategories(): List<Category> {
         return listOf(
-            Product(1,"Apple",120.0,"Fresh Apple","Fruit","1kg"),
-            Product(2,"Banana",100.0,"Fresh Banana","Fruit","1kg"),
-            Product(3,"Orange",150.0,"Fresh Orange","Fruit","1kg"),
-            Product(4,"Grapes",200.0,"Fresh Grapes","Fruit","1kg"),
-            Product(5,"Mango",250.0,"Fresh Mango","Fruit","1kg"),
-            Product(6,"Pineapple",300.0,"Fresh Pineapple","Fruit","1kg"),
-            Product(7,"Watermelon",350.0,"Fresh Watermelon","Fruit","1kg"),
-            Product(8,"Strawberry",400.0,"Fresh Strawberry","Fruit","1kg"),
+            Category(1, "Vegetables", R.drawable.ic_veg),
+            Category(2, "Fruits", R.drawable.ic_fruit),
+            Category(3, "Dairy", R.drawable.ic_dairy),
+            Category(4, "Snacks", R.drawable.ic_snacks)
+        )
+    }
+
+    fun getProducts(): List<Product> {
+        return listOf(
+            Product(101, "Fresh Tomato", 40.0, "1 kg", R.drawable.img_tomato, "Vegetables"),
+            Product(102, "Amul Butter", 55.0, "100 g", R.drawable.img_butter, "Dairy"),
+            Product(103, "Banana", 60.0, "1 dozen", R.drawable.img_banana, "Fruits"),
+            Product(104, "Lay's Classic", 20.0, "50 g", R.drawable.img_lays, "Snacks")
         )
     }
 }

@@ -22,6 +22,8 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
+        setupListeners()
+        observeViewModel()
 
     }
     private fun setupListeners(){

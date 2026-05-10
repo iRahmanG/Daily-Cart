@@ -1,7 +1,7 @@
 package com.example.dailycart.data.local
 
+import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room3.Entity
 
 @Entity(tableName = "cart_items")
 data class CartItem(

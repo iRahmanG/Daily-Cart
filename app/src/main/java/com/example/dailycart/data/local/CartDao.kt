@@ -10,7 +10,7 @@ import androidx.room.Update
 
 @Dao
 interface CartDao {
-    @Query("SELECT * FROM cart_table")
+    @Query("SELECT * FROM cart_items")
     fun getAllCartItems(): LiveData<List<CartItem>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
