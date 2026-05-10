@@ -39,19 +39,23 @@
         <EditText
             android:id="@+id/otp1"
             android:textAlignment="center"
-            style="@style/OtpBoxStyle" />
+            style="@style/OtpBoxStyle"
+            android:inputType="number" />
         <EditText
             android:id="@+id/otp2"
             android:textAlignment="center"
-            style="@style/OtpBoxStyle" />
+            style="@style/OtpBoxStyle"
+            android:inputType="number" />
         <EditText
             android:id="@+id/otp3"
             android:textAlignment="center"
-            style="@style/OtpBoxStyle" />
+            style="@style/OtpBoxStyle"
+            android:inputType="number" />
         <EditText
             android:id="@+id/otp4"
             android:textAlignment="center"
-            style="@style/OtpBoxStyle" />
+            style="@style/OtpBoxStyle"
+            android:inputType="number" />
     </LinearLayout>
 
     <RelativeLayout

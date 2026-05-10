@@ -1,12 +1,13 @@
 package com.example.dailycart.ui.home
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dailycart.R
+import com.example.dailycart.data.Repository.GroceryRepository
+import com.example.dailycart.data.local.AppDatabase
 import com.example.dailycart.databinding.FragmentHomeBinding
 import com.example.dailycart.ui.adapters.CategoryAdapter
 import com.example.dailycart.ui.adapters.ProductAdapter
@@ -20,7 +21,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
-        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        
+        val database = AppDatabase.getInstance(requireContext())
+        val repository = GroceryRepository(database.cartDao())
+        val factory = HomeViewModelFactory(repository)
+        
+        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
         setupObservers()
     }
@@ -34,9 +40,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         // Observe Products
         viewModel.products.observe(viewLifecycleOwner) { productList ->
             binding.rvProducts.adapter = ProductAdapter(productList) { product ->
-                // This is the callback for the (+) button
-                Toast.makeText(context, "Added ${product.name} to cart", Toast.LENGTH_SHORT).show()
-                // TODO: Link to Room DB Cart later
+                viewModel.addToCart(product)
+                Toast.makeText(requireContext(), "${product.name} added to cart", Toast.LENGTH_SHORT).show()
             }
         }
     }
