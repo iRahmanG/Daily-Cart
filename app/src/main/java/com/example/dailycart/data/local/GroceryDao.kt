@@ -1,15 +1,13 @@
 package com.example.dailycart.data.local
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
+import com.example.dailycart.data.model.Order
 
 @Dao
-interface CartDao {
+interface GroceryDao {
+
+    // CART OPERATIONS
     @Query("SELECT * FROM cart_items")
     fun getAllCartItems(): LiveData<List<CartItem>>
 
@@ -24,4 +22,14 @@ interface CartDao {
 
     @Query("SELECT * FROM cart_items WHERE productId = :id")
     suspend fun getCartItemById(id: Int): CartItem?
+
+    @Query("DELETE FROM cart_items")
+    suspend fun deleteAllCartItems()
+
+    // ORDER HISTORY OPERATIONS
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOrder(order: Order)
+
+    @Query("SELECT * FROM orders_table ORDER BY timestamp DESC")
+    fun getAllOrders(): LiveData<List<Order>>
 }

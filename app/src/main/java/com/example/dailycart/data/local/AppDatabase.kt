@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [CartItem::class], version = 2)
 abstract class AppDatabase : RoomDatabase(){
-    abstract fun cartDao(): CartDao
+    abstract fun cartDao(): GroceryDao
 
     companion object {
         @Volatile
