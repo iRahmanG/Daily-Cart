@@ -22,7 +22,7 @@ class CartAdapter(
         val item = cartItems[position]
         holder.binding.apply {
             tvProductName.text = item.name
-            tvProductUnit.text = "1 Unit"
+            tvProductUnit.text = item.unit
             tvPrice.text = "₹${item.price}"
             tvQuantity.text = item.quantity.toString()
             ivProduct.setImageResource(item.imageRes)

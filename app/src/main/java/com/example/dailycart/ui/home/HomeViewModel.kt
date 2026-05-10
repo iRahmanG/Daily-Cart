@@ -34,6 +34,7 @@ class HomeViewModel(private val repository: GroceryRepository) : ViewModel() {
             productId = product.id,
             name = product.name,
             price = product.price,
+            unit = product.unit,
             imageRes = product.imageRes,
             quantity = 1 // Initial quantity
         )

@@ -22,4 +22,6 @@ interface CartDao {
     @Update
     suspend fun update(cartItem: CartItem)
 
+    @Query("SELECT * FROM cart_items WHERE productId = :id")
+    suspend fun getCartItemById(id: Int): CartItem?
 }

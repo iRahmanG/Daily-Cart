@@ -1,21 +1,42 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.DailyCart" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorTertiary">@color/tertiary_fixed</item>
+
+        <item name="android:windowBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOutline">@color/outline</item>
+
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.DailyCart.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.DailyCart.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.DailyCart.Large</item>
     </style>
 
     <style name="Theme.DailyCart" parent="Base.Theme.DailyCart" />
+
+    <style name="ShapeAppearance.DailyCart.Small" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">8dp</item> </style>
+
+    <style name="ShapeAppearance.DailyCart.Medium" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">12dp</item> </style>
+
+    <style name="ShapeAppearance.DailyCart.Large" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerSize">16dp</item> </style>
 
     <style name="OtpBoxStyle">
         <item name="android:layout_width">60dp</item>
         <item name="android:layout_height">70dp</item>
         <item name="android:layout_margin">8dp</item>
         <item name="android:background">@drawable/bg_otp_box</item>
-        android:gravity="center"
-        android:inputType="number"
-        android:maxLength="1"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

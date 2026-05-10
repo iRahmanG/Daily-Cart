@@ -5,6 +5,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dailycart.R
+import com.example.dailycart.data.Repository.GroceryRepository
+import com.example.dailycart.data.local.AppDatabase
 import com.example.dailycart.databinding.FragmentCartBinding
 import com.example.dailycart.ui.adapters.CartAdapter
 
@@ -18,7 +20,11 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCartBinding.bind(view)
-        viewModel = ViewModelProvider(requireActivity())[CartViewModel::class.java]
+
+        val database = AppDatabase.getInstance(requireContext())
+        val repository = GroceryRepository(database.cartDao())
+        val factory = CartViewModelFactory(repository)
+        viewModel = ViewModelProvider(requireActivity(), factory)[CartViewModel::class.java]
 
         val adapter = CartAdapter(emptyList()) { item, newQty ->
             viewModel.updateQuantity(item, newQty)
@@ -29,10 +35,16 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             adapter.updateList(items)
         }
 
-        viewModel.totalPrice.observe(viewLifecycleOwner) { total ->
-            binding.tvItemTotal.text = "₹$total"
-            binding.tvGrandTotal.text = "₹${total + 30}" // Adding static delivery/tax
-            binding.tvBottomTotal.text = "₹${total + 30}"
+        viewModel.itemTotal.observe(viewLifecycleOwner) { total ->
+            binding.tvItemTotal.text = "₹${"%.2f".format(total)}"
+        }
+//        viewModel.deliveryCharge.observe(viewLifecycleOwner) { deliveryCharge ->
+//            binding.tvDeliveryCharge.text = "₹${"%.2f".format(deliveryCharge)}"
+//        }
+
+        viewModel.grandTotal.observe(viewLifecycleOwner) { grandTotal ->
+            binding.tvGrandTotal.text = "₹${"%.2f".format(grandTotal)}"
+            binding.tvBottomTotal.text = "₹${"%.2f".format(grandTotal)}"
         }
     }
 

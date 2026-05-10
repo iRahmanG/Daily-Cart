@@ -68,7 +68,7 @@
                 android:layout_height="54dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                app:cardBackgroundColor="#F5F7F9"
+                app:cardBackgroundColor="@color/search_bar_bg"
                 app:cardCornerRadius="14dp"
                 app:cardElevation="0dp">
 

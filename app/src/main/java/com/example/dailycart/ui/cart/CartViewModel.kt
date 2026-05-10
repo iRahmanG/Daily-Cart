@@ -9,12 +9,20 @@ import com.example.dailycart.data.Repository.GroceryRepository
 import com.example.dailycart.data.local.CartItem
 import kotlinx.coroutines.launch
 
-class CartViewModel : ViewModel() {
-    private val _cartItems = MutableLiveData<List<CartItem>>()
-    val cartItems: LiveData<List<CartItem>> = _cartItems
+class CartViewModel(private val repository: GroceryRepository) : ViewModel() {
+    val cartItems: LiveData<List<CartItem>> = repository.allCartItems
 
-    private lateinit var repository: GroceryRepository
+    val itemTotal: LiveData<Double> = cartItems.map { items ->
+        items.sumOf { it.price * it.quantity }
+    }
 
+    val deliveryCharge: LiveData<Double> = itemTotal.map { total ->
+        if (total > 0.0) 30.0 else 0.0
+    }
+
+    val grandTotal: LiveData<Double> = itemTotal.map { total ->
+        if (total > 0.0) total + 30.0 else 0.0
+    }
 
     fun updateQuantity(item: CartItem, newQuantity: Int) {
         viewModelScope.launch {
@@ -25,10 +33,4 @@ class CartViewModel : ViewModel() {
             }
         }
     }
-    // LiveData for Total Price
-    val totalPrice: LiveData<Double> = repository.allCartItems.map { items ->
-        items.sumOf { it.price * it.quantity }
-    }
-
-
 }
