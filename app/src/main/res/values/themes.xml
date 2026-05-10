@@ -6,4 +6,16 @@
     </style>
 
     <style name="Theme.DailyCart" parent="Base.Theme.DailyCart" />
+
+    <style name="OtpBoxStyle">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">70dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:background">@drawable/bg_otp_box</item>
+        android:gravity="center"
+        android:inputType="number"
+        android:maxLength="1"
+        android:textSize="24sp"
+        android:textStyle="bold"
+    </style>
 </resources>
