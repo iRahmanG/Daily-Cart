@@ -54,7 +54,7 @@ class CheckoutFragment : Fragment(R.layout.fragment_checkout) {
                 Toast.makeText(requireContext(), "Cart is empty", Toast.LENGTH_SHORT).show()
             } else {
                 binding.btnPlaceOrder.isEnabled = false
-                cartViewModel.placeOrder()
+                cartViewModel.placeOrder(cart)
             }
         }
     }

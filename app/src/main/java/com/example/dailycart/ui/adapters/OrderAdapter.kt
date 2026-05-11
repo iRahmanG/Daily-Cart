@@ -16,7 +16,7 @@ class OrderAdapter(private val orders: List<Order>) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
-        val binding = ItemOrderHistoryHistoryBinding.inflate(
+        val binding = ItemOrderHistoryBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
         return OrderViewHolder(binding)
