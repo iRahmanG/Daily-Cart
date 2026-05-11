@@ -79,11 +79,16 @@ class CheckoutFragment : Fragment(R.layout.fragment_checkout) {
 
         val isOnline = selectedPaymentMethod == "ONLINE"
 
+        // Update Card Borders
         binding.cardOnline.strokeColor = if (isOnline) activeBlue else inactiveBorder
         binding.cardOnline.strokeWidth = if (isOnline) 6 else 2
 
         binding.cardCOD.strokeColor = if (!isOnline) activeBlue else inactiveBorder
         binding.cardCOD.strokeWidth = if (!isOnline) 6 else 2
+
+        // Update Radio Buttons for consistency
+        binding.rbOnline.isChecked = isOnline
+        binding.rbCOD.isChecked = !isOnline
     }
 
     override fun onDestroyView() {
