@@ -28,4 +28,8 @@ class GroceryRepository(private val groceryDao: GroceryDao) {
     suspend fun saveOrder(order: Order) {
         groceryDao.insertOrder(order)
     }
+    suspend fun completeOrder(order: Order) {
+        groceryDao.insertOrder(order)
+        groceryDao.deleteAllCartItems()
+    }
 }

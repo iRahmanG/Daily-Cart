@@ -9,84 +9,66 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.dailycart.R
 import com.example.dailycart.databinding.FragmentCheckoutBinding
-import com.example.dailycart.ui.cart.CartViewModel
 
 class CheckoutFragment : Fragment(R.layout.fragment_checkout) {
 
     private var _binding: FragmentCheckoutBinding? = null
     private val binding get() = _binding!!
-
-    // Refactored to use CartViewModel
-    private lateinit var cartViewModel: CartViewModel
-    private var selectedPaymentMethod = "ONLINE"
+    private lateinit var checkoutViewModel: CheckoutViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCheckoutBinding.bind(view)
 
-        // Using requireActivity() is crucial so CartFragment and CheckoutFragment
-        // share the same ViewModel instance and data.
-        cartViewModel = ViewModelProvider(requireActivity())[CartViewModel::class.java]
+        // Initialize the dedicated ViewModel
+        checkoutViewModel = ViewModelProvider(this)[CheckoutViewModel::class.java]
 
-        setupUI()
-        setupPaymentSelection()
-        observeCartData()
+        setupListeners()
+        observeData()
     }
 
-    private fun setupUI() {
+    private fun setupListeners() {
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
-        updatePaymentSelectionUI()
-    }
 
-    private fun setupPaymentSelection() {
-        binding.cardCOD.setOnClickListener {
-            selectedPaymentMethod = "COD"
-            updatePaymentSelectionUI()
-        }
-
-        binding.cardOnline.setOnClickListener {
-            selectedPaymentMethod = "ONLINE"
-            updatePaymentSelectionUI()
-        }
+        binding.cardCOD.setOnClickListener { checkoutViewModel.setPaymentMethod("COD") }
+        binding.cardOnline.setOnClickListener { checkoutViewModel.setPaymentMethod("ONLINE") }
 
         binding.btnPlaceOrder.setOnClickListener {
-            if (cartViewModel.cartItems.value.isNullOrEmpty()) {
-                Toast.makeText(requireContext(), "Cart is empty", Toast.LENGTH_SHORT).show()
-            } else {
-                binding.btnPlaceOrder.isEnabled = false
-                cartViewModel.placeOrder(cart)
-            }
+            binding.btnPlaceOrder.isEnabled = false // Prevent double clicks
+            checkoutViewModel.placeOrder()
         }
     }
 
-    private fun updatePaymentSelectionUI() {
-        // Correct resource referencing using R.color
-        val activeBlue = ContextCompat.getColor(requireContext(), R.color.primary)
-        val inactiveBorder = ContextCompat.getColor(requireContext(), R.color.soft_border)
-
-        val isOnline = selectedPaymentMethod == "ONLINE"
-
-        binding.cardOnline.strokeColor = if (isOnline) activeBlue else inactiveBorder
-        binding.cardOnline.strokeWidth = if (isOnline) 6 else 2
-
-        binding.cardCOD.strokeColor = if (!isOnline) activeBlue else inactiveBorder
-        binding.cardCOD.strokeWidth = if (!isOnline) 6 else 2
-    }
-
-    private fun observeCartData() {
-        // Observe totals
-        cartViewModel.itemTotal.observe(viewLifecycleOwner) { subtotal ->
-            val delivery = 30.0
-            binding.tvFinalAmount.text = "₹${subtotal + delivery}"
+    private fun observeData() {
+        // Observe Price
+        checkoutViewModel.grandTotal.observe(viewLifecycleOwner) { total ->
+            binding.tvFinalAmount.text = "₹$total"
         }
 
-        // Observe checkout success
-        cartViewModel.orderSuccess.observe(viewLifecycleOwner) { success ->
+        // Observe Payment Method changes to update UI borders
+        checkoutViewModel.paymentMethod.observe(viewLifecycleOwner) { method ->
+            updatePaymentUI(method)
+        }
+
+        // Observe Order Success
+        checkoutViewModel.orderPlaced.observe(viewLifecycleOwner) { success ->
             if (success) {
                 findNavController().navigate(R.id.action_checkout_to_success)
-                cartViewModel.resetOrderState()
             }
         }
+    }
+
+    private fun updatePaymentUI(method: String) {
+        val activeColor = ContextCompat.getColor(requireContext(), R.color.primary)
+        val inactiveColor = ContextCompat.getColor(requireContext(), R.color.soft_border)
+
+        val isOnline = method == "ONLINE"
+
+        binding.cardOnline.strokeColor = if (isOnline) activeColor else inactiveColor
+        binding.cardOnline.strokeWidth = if (isOnline) 6 else 2
+
+        binding.cardCOD.strokeColor = if (!isOnline) activeColor else inactiveColor
+        binding.cardCOD.strokeWidth = if (!isOnline) 6 else 2
     }
 
     override fun onDestroyView() {
