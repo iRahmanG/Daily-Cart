@@ -22,7 +22,7 @@ class MockPaymentFragment : Fragment(R.layout.fragment_mock_payment) {
         viewModel = ViewModelProvider(requireActivity())[CartViewModel::class.java]
 
         viewLifecycleOwner.lifecycleScope.launch {
-            delay(2500)
+            delay(3000)
 
             if (isAdded) {
                 viewModel.placeOrder("ONLINE")

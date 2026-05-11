@@ -36,7 +36,8 @@ class HomeViewModel(private val repository: GroceryRepository) : ViewModel() {
             price = product.price,
             unit = product.unit,
             imageRes = product.imageRes,
-            quantity = 1 // Initial quantity
+            quantity = 1,
+            originalPrice = product.price
         )
         viewModelScope.launch {
             repository.insert(cartItem)

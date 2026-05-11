@@ -1,5 +1,6 @@
 package com.example.dailycart
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.dailycart.databinding.ActivityMainBinding
+import com.example.dailycart.ui.login.LoginActivity
+import com.example.dailycart.utils.SessionManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +20,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val sessionManager = SessionManager(this)
+
+        if (!sessionManager.isLoggedIn()) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

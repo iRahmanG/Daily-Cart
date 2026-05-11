@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.airbnb.lottie.FontAssetDelegate
+import com.airbnb.lottie.RenderMode
 import com.example.dailycart.R
 import com.example.dailycart.databinding.FragmentOrderSuccessBinding
 
@@ -31,7 +32,7 @@ class OrderSuccessFragment : Fragment(R.layout.fragment_order_success) {
 
     private fun setupProfessionalLottie() {
         binding.lottieSuccess.apply {
-            // FIX: One delegate to rule them all. Intercepts font requests to prevent crash
+            setRenderMode(RenderMode.SOFTWARE)
             setFontAssetDelegate(object : FontAssetDelegate() {
                 override fun fetchFont(fontFamily: String?): android.graphics.Typeface? {
                     return null // Fallback to system default
