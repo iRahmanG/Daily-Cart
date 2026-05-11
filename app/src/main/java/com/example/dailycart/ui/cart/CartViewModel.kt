@@ -14,6 +14,7 @@ class CartViewModel(private val repository: GroceryRepository) : ViewModel() {
 
     private val _orderSuccess = MutableLiveData<Boolean>(false)
     val orderSuccess: LiveData<Boolean> = _orderSuccess
+
     val cartItems: LiveData<List<CartItem>> = repository.allCartItems
 
     val itemTotal: LiveData<Double> = cartItems.map { items ->
@@ -25,7 +26,8 @@ class CartViewModel(private val repository: GroceryRepository) : ViewModel() {
     }
 
     val grandTotal: LiveData<Double> = itemTotal.map { total ->
-        if (total > 0.0) total + 30.0 else 0.0
+        val delivery = if (total > 0.0) 30.0 else 0.0
+        total + delivery
     }
 
     fun updateQuantity(item: CartItem, newQuantity: Int) {
@@ -52,13 +54,13 @@ class CartViewModel(private val repository: GroceryRepository) : ViewModel() {
                 paymentMethod = paymentMethod
             )
 
-            // 2. Save to Order History Table
+            // 1. Save to History Table
             repository.saveOrder(newOrder)
 
-            // 3. Clear the Cart Table
+            // 2. Clear the active Cart Table
             repository.clearCart()
 
-            // 4. Notify UI of success
+            // 3. Notify UI to navigate to Success Screen
             _orderSuccess.postValue(true)
         }
     }

@@ -5,6 +5,8 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dailycart.R
+import com.example.dailycart.data.Repository.GroceryRepository
+import com.example.dailycart.data.local.AppDatabase
 import com.example.dailycart.databinding.FragmentOrdersBinding
 import com.example.dailycart.ui.adapters.OrderAdapter
 
@@ -18,8 +20,12 @@ class OrdersFragment : Fragment(R.layout.fragment_orders) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentOrdersBinding.bind(view)
 
+        val database = AppDatabase.getInstance(requireContext())
+        val repository = GroceryRepository(database.cartDao())
+        val factory = OrdersViewModelFactory(repository)
+
         // Initialize the dedicated OrdersViewModel
-        viewModel = ViewModelProvider(this)[OrdersViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[OrdersViewModel::class.java]
 
         setupRecyclerView()
         observeOrders()
