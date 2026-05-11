@@ -52,30 +52,29 @@ class CheckoutFragment : Fragment(R.layout.fragment_checkout) {
             selectedPaymentMethod = "ONLINE"
             updatePaymentSelectionUI()
         }
-        binding.btnPlaceOrder.setOnClickListener {
-            if (selectedPaymentMethod == "ONLINE") {
-                // Go to mock payment gateway
-                findNavController().navigate(R.id.action_checkout_to_mockPayment)
-            } else {
-                // Cash on Delivery: Process immediately
-                viewModel.placeOrder("COD")
-            }
-        }
 
         binding.btnPlaceOrder.setOnClickListener {
-            if (viewModel.cartItems.value.isNullOrEmpty()) {
+            val cartItems = viewModel.cartItems.value
+
+            if (cartItems.isNullOrEmpty()) {
                 Toast.makeText(requireContext(), "Cart is empty", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            binding.btnPlaceOrder.isEnabled = false
+
+            if (selectedPaymentMethod == "ONLINE") {
+                findNavController().navigate(R.id.action_checkout_to_mockPayment)
             } else {
-                binding.btnPlaceOrder.isEnabled = false // Prevent double tap
-                viewModel.placeOrder(selectedPaymentMethod)
+                viewModel.placeOrder("COD")
             }
         }
     }
 
     private fun observeCheckoutStatus() {
         viewModel.orderSuccess.observe(viewLifecycleOwner) { success ->
-            if (success) {
-                // Navigate to Success screen with Lottie animation
+
+            if (success && selectedPaymentMethod == "COD") {
                 findNavController().navigate(R.id.action_checkout_to_success)
                 viewModel.resetOrderState()
             }
