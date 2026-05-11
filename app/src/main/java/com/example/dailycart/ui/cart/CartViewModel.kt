@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.dailycart.data.Repository.GroceryRepository
 import com.example.dailycart.data.local.CartItem
 import com.example.dailycart.data.model.Order
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CartViewModel(private val repository: GroceryRepository) : ViewModel() {
@@ -62,6 +63,15 @@ class CartViewModel(private val repository: GroceryRepository) : ViewModel() {
 
             // 3. Notify UI to navigate to Success Screen
             _orderSuccess.postValue(true)
+        }
+    }
+    fun addItemToCart(item: CartItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                repository.insert(item)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.dailycart.R
 import com.example.dailycart.data.Repository.GroceryRepository
-import com.example.dailycart.data.local.AppDatabase
+import com.example.dailycart.data.local.GroceryDatabase
 import com.example.dailycart.databinding.FragmentCartBinding
 import com.example.dailycart.ui.adapters.CartAdapter
 
@@ -22,7 +22,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         _binding = FragmentCartBinding.bind(view)
 
 
-        val database = AppDatabase.getInstance(requireContext())
+        val database = GroceryDatabase.getInstance(requireContext())
         val repository = GroceryRepository(database.cartDao())
         val factory = CartViewModelFactory(repository)
 

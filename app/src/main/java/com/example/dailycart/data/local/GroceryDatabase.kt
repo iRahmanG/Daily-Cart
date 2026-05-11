@@ -7,18 +7,18 @@ import androidx.room.RoomDatabase
 import com.example.dailycart.data.model.Order
 
 @Database(entities = [CartItem::class, Order::class], version = 4)
-abstract class AppDatabase : RoomDatabase(){
+abstract class GroceryDatabase : RoomDatabase(){
     abstract fun cartDao(): GroceryDao
 
     companion object {
         @Volatile
-        private var INSTANCE: AppDatabase? = null
+        private var INSTANCE: GroceryDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase {
+        fun getInstance(context: Context): GroceryDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    AppDatabase::class.java,
+                    GroceryDatabase::class.java,
                     "grocery_db"
                 ).fallbackToDestructiveMigration()
                  .build()
