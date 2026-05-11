@@ -20,6 +20,11 @@ class LoginActivity : AppCompatActivity() {
 
         sessionManager = SessionManager(this)
 
+        // Check if redirected due to AuthFailureError
+        if (intent.getBooleanExtra("reauth_required", false)) {
+            Toast.makeText(this, "Session expired. Please log in again.", Toast.LENGTH_LONG).show()
+        }
+
         // 2. Check Session: If logged in, go straight to MainActivity
         if (sessionManager.isLoggedIn()) {
             startActivity(Intent(this, MainActivity::class.java))

@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="OceanX Fresh"
+                    android:text="DailyCart"
                     android:textColor="@color/primary"
                     android:textSize="20sp"
                     android:textStyle="bold" />

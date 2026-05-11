@@ -23,7 +23,6 @@ class MockPaymentFragment : Fragment(R.layout.fragment_mock_payment) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             delay(3000)
-
             if (isAdded) {
                 viewModel.placeOrder("ONLINE")
                 findNavController().navigate(R.id.action_payment_to_success)

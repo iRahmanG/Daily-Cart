@@ -29,8 +29,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="false"
-            android:hardwareAccelerated="false" />
+            android:exported="false" />
 
     </application>
 

@@ -22,7 +22,7 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="false"
             android:scaleType="centerCrop"
-            app:lottie_rawRes="@raw/success_animation" />
+            app:lottie_rawRes="@raw/payment_success" />
     </FrameLayout>
 
     <TextView
