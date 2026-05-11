@@ -48,7 +48,6 @@ class CheckoutViewModel(private val repository: GroceryRepository) : ViewModel()
                 itemCount = items.sumOf { it.quantity },
                 paymentMethod = _paymentMethod.value ?: "ONLINE"
             )
-
             // Atomic Transaction
             repository.saveOrder(order)
             repository.clearCart()

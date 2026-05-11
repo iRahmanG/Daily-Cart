@@ -63,4 +63,7 @@ dependencies {
     // UI & Navigation
     implementation(libs.material.v1110)
     implementation(libs.androidx.constraintlayout.v214)
+
+    // Lottie
+    implementation("com.airbnb.android:lottie:6.4.0")
 }
