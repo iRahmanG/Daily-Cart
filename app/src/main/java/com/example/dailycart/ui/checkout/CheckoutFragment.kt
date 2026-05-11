@@ -52,6 +52,15 @@ class CheckoutFragment : Fragment(R.layout.fragment_checkout) {
             selectedPaymentMethod = "ONLINE"
             updatePaymentSelectionUI()
         }
+        binding.btnPlaceOrder.setOnClickListener {
+            if (selectedPaymentMethod == "ONLINE") {
+                // Go to mock payment gateway
+                findNavController().navigate(R.id.action_checkout_to_mockPayment)
+            } else {
+                // Cash on Delivery: Process immediately
+                viewModel.placeOrder("COD")
+            }
+        }
 
         binding.btnPlaceOrder.setOnClickListener {
             if (viewModel.cartItems.value.isNullOrEmpty()) {

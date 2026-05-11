@@ -45,6 +45,10 @@
             app:destination="@id/orderSuccessFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_checkout_to_mockPayment"
+            app:destination="@id/mockPaymentFragment" />
+
     </fragment>
 
     <fragment
@@ -54,7 +58,7 @@
 
     <fragment
         android:id="@+id/mockPaymentFragment"
-        android:name="com.example.dailycart.ui.checkout.MockPaymentFragment"
+        android:name="com.example.dailycart.ui.payment.MockPaymentFragment"
         android:label="Processing Payment">
         <action
             android:id="@+id/action_payment_to_success"
