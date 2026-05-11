@@ -38,7 +38,7 @@
             android:layout_margin="8dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Organic Red Apple"
+            android:text="Organic Apple"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/btnAdd"
             app:layout_constraintStart_toStartOf="parent"

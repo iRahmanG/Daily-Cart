@@ -26,17 +26,15 @@ class FlashSaleAdapter(
         holder.binding.apply {
             // Bind Data
             tvProductName.text = item.name
-            tvWeight.text = "${item.quantity} ${item.unit}"
+            tvWeight.text = "${item.unit}"
             tvPrice.text = "₹${item.price.toInt()}"
 
             // Calculate and show discount tag (Example: 20% OFF)
             val discount = ((item.originalPrice - item.price) / item.originalPrice * 100).toInt()
             tvDiscountTag.text = "$discount% OFF"
 
-            // Set images from drawables (or use Glide for URLs)
             ivProduct.setImageResource(item.imageRes)
 
-            // Click listener for the blue "+" button
             btnAdd.setOnClickListener { onAddClick(item) }
         }
     }
