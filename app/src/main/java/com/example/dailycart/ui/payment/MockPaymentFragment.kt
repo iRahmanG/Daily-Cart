@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.dailycart.R
 import com.example.dailycart.ui.cart.CartViewModel
@@ -20,15 +21,13 @@ class MockPaymentFragment : Fragment(R.layout.fragment_mock_payment) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[CartViewModel::class.java]
 
-        // Simulate payment gateway delay
-        CoroutineScope(Dispatchers.Main).launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             delay(2500)
 
-            // Finalize the order in the background
-            viewModel.placeOrder("ONLINE")
-
-            // Navigate to success
-            findNavController().navigate(R.id.action_payment_to_success)
+            if (isAdded) {
+                viewModel.placeOrder("ONLINE")
+                findNavController().navigate(R.id.action_payment_to_success)
+            }
         }
     }
 }

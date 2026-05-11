@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.airbnb.lottie.FontAssetDelegate
 import com.example.dailycart.R
 import com.example.dailycart.databinding.FragmentOrderSuccessBinding
 
@@ -16,19 +17,27 @@ class OrderSuccessFragment : Fragment(R.layout.fragment_order_success) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentOrderSuccessBinding.bind(view)
 
-        // Initial UI State: Hide text/card for a reveal effect
+        // 1. Initial UI State: Hide text/card for a professional reveal effect
         binding.tvSuccessTitle.alpha = 0f
         binding.orderDetailCard.alpha = 0f
 
-        // Set a random order ID (unless you implement SafeArgs later)
+        // 2. Set dynamic Order ID
         binding.tvOrderID.text = "Order ID: #OX-${(10000..99999).random()}"
 
+        // 3. Setup Lottie & Navigation
         setupProfessionalLottie()
         setupListeners()
     }
 
     private fun setupProfessionalLottie() {
         binding.lottieSuccess.apply {
+            // FIX: One delegate to rule them all. Intercepts font requests to prevent crash
+            setFontAssetDelegate(object : FontAssetDelegate() {
+                override fun fetchFont(fontFamily: String?): android.graphics.Typeface? {
+                    return null // Fallback to system default
+                }
+            })
+
             addAnimatorUpdateListener { animation ->
                 // Reveal text and details when the checkmark is halfway done
                 if (animation.animatedFraction > 0.4f) {
@@ -41,7 +50,7 @@ class OrderSuccessFragment : Fragment(R.layout.fragment_order_success) {
 
     private fun setupListeners() {
         binding.btnTrackOrder.setOnClickListener {
-            // Navigate to the orders fragment you created
+            // Navigate to Order History
             findNavController().navigate(R.id.ordersFragment)
         }
 
