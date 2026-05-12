@@ -35,15 +35,18 @@ class CartViewModel(private val repository: GroceryRepository) : ViewModel() {
             value = (itemTotal.value ?: 0.0) + delivery
         }
     }
-
-    // Address Actions
-
-    val addressAutoPicker = allAddresses.observeForever { addresses ->
+    private val addressObserver = Observer<List<Address>> { addresses ->
         if (_selectedAddress.value == null && !addresses.isNullOrEmpty()) {
-            // Pick the default address or the first one available
             _selectedAddress.value = addresses.find { it.isDefault } ?: addresses.first()
         }
     }
+
+    init {
+        //observing addresses for auto-selection
+        allAddresses.observeForever(addressObserver)
+    }
+
+    // Address Actions
     fun setAddress(address: Address) {
         _selectedAddress.value = address
     }
@@ -60,8 +63,7 @@ class CartViewModel(private val repository: GroceryRepository) : ViewModel() {
         }
     }
 
-    //Cart Actions
-
+    // Cart Actions
     fun addItemToCart(item: CartItem) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -102,9 +104,13 @@ class CartViewModel(private val repository: GroceryRepository) : ViewModel() {
             _orderSuccess.postValue(true)
         }
     }
-    override fun onCleared() {
-        super.onCleared()
+
+    fun resetOrderState() {
+        _orderSuccess.value = false
     }
 
-    fun resetOrderState() { _orderSuccess.value = false }
+    override fun onCleared() {
+        super.onCleared()
+        allAddresses.removeObserver(addressObserver)
+    }
 }

@@ -21,10 +21,15 @@ class AddEditAddressFragment : Fragment(R.layout.fragment_add_edit_address) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentAddEditAddressBinding.bind(view)
+
+        // Sharing ViewModel with requireActivity() ensures data consistency across fragments
         viewModel = ViewModelProvider(requireActivity())[CartViewModel::class.java]
 
-        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
 
+        // Manual Bundle retrieval used instead of SafeArgs to fix build-time plugin errors
         editingAddress = arguments?.getParcelable("address_data")
 
         editingAddress?.let { address ->
@@ -58,15 +63,15 @@ class AddEditAddressFragment : Fragment(R.layout.fragment_add_edit_address) {
 
         if (validateInput(name, phone, street)) {
             val address = Address(
-                // Use the ID from the address we are editing, or 0 if new
+                // Use existing ID for updates (triggers @Update), or 0 for new records (triggers @Insert)
                 id = editingAddress?.id ?: 0,
                 title = title.ifBlank { "Other" },
                 receiverName = name,
                 phoneNumber = phone,
                 streetAddress = street,
                 city = city,
-                state = "CA",
-                zipCode = "94025",
+                state = "UP",
+                zipCode = "201206",
                 isDefault = binding.cbDefault.isChecked
             )
 

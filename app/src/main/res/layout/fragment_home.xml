@@ -94,11 +94,14 @@
             </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
+                android:id="@+id/llAddressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_address"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="6dp">
@@ -110,10 +113,11 @@
                     app:tint="#616161" />
 
                 <TextView
+                    android:id="@+id/tvSelectedAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="Delivery to: 123 Ocean Drive"
+                    android:text="Select Address"
                     android:textColor="#424242"
                     android:textSize="12sp"
                     android:textStyle="bold" />
