@@ -9,8 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.example.dailycart.ui.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" >
-    </fragment>
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/dealsFragment"
@@ -38,7 +37,6 @@
         android:id="@+id/checkoutFragment"
         android:name="com.example.dailycart.ui.checkout.CheckoutFragment"
         android:label="Checkout" >
-
         <action
             android:id="@+id/action_checkout_to_success"
             app:destination="@id/orderSuccessFragment"
@@ -47,7 +45,31 @@
         <action
             android:id="@+id/action_checkout_to_mockPayment"
             app:destination="@id/mockPaymentFragment" />
+        <action
+            android:id="@+id/action_checkout_to_addressList"
+            app:destination="@id/addressListFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/addressListFragment"
+        android:name="com.example.dailycart.ui.address.AddressListFragment"
+        android:label="Saved Addresses"
+        tools:layout="@layout/fragment_address_list">
+        <action
+            android:id="@+id/action_addressList_to_addEditAddress"
+            app:destination="@id/addEditAddressFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addEditAddressFragment"
+        android:name="com.example.dailycart.ui.address.AddEditAddressFragment"
+        android:label="Manage Address"
+        tools:layout="@layout/fragment_add_edit_address">
+        <argument
+            android:name="address"
+            app:argType="com.example.dailycart.data.model.Address"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
     <fragment

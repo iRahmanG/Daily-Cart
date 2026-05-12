@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.ksp)
+    id("kotlin-parcelize")
+
 }
 
 android {
@@ -65,5 +67,5 @@ dependencies {
     implementation(libs.androidx.constraintlayout.v214)
 
     // Lottie
-    implementation("com.airbnb.android:lottie:6.4.0")
+    implementation("com.airbnb.android:lottie:6.7.1")
 }

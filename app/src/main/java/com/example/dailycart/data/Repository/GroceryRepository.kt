@@ -3,6 +3,7 @@ package com.example.dailycart.data.Repository
 import androidx.lifecycle.LiveData
 import com.example.dailycart.data.local.GroceryDao
 import com.example.dailycart.data.local.CartItem
+import com.example.dailycart.data.model.Address
 import com.example.dailycart.data.model.Order
 
 class GroceryRepository(private val groceryDao: GroceryDao) {
@@ -19,8 +20,8 @@ class GroceryRepository(private val groceryDao: GroceryDao) {
         }
     }
 
-    suspend fun delete(item: CartItem) = groceryDao.delete(item)
     suspend fun update(item: CartItem) = groceryDao.update(item)
+    suspend fun delete(item: CartItem) = groceryDao.delete(item)
 
     suspend fun clearCart(){
         groceryDao.deleteAllCartItems()
@@ -31,5 +32,18 @@ class GroceryRepository(private val groceryDao: GroceryDao) {
     suspend fun completeOrder(order: Order) {
         groceryDao.insertOrder(order)
         groceryDao.deleteAllCartItems()
+    }
+
+    // Address Logic
+    val allAddresses = groceryDao.getAllAddresses()
+
+    suspend fun saveAddress(address: Address) {
+        if (address.isDefault) {
+            groceryDao.resetDefaultAddresses()
+        }
+        groceryDao.insertAddress(address)
+    }
+    suspend fun deleteAddress(address: Address) {
+        groceryDao.deleteAddress(address)
     }
 }

@@ -35,10 +35,11 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     }
 
     private fun setupRecyclerView() {
-        val adapter = CartAdapter(emptyList()) { item, newQty ->
-            viewModel.updateQuantity(item, newQty)
+        val adapter = CartAdapter(emptyList()) { item, isIncrement->
+            viewModel.updateQuantity(item, isIncrement)
         }
         binding.rvCartItems.adapter = adapter
+        binding.rvCartItems.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
     }
 
     private fun setupObservers() {

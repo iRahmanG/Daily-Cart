@@ -54,4 +54,6 @@ class CheckoutViewModel(private val repository: GroceryRepository) : ViewModel()
             _orderPlaced.postValue(true)
         }
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.example.dailycart.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.dailycart.data.model.Address
 import com.example.dailycart.data.model.Order
 
 @Dao
@@ -32,4 +33,16 @@ interface GroceryDao {
 
     @Query("SELECT * FROM orders_table ORDER BY timestamp DESC")
     fun getAllOrders(): LiveData<List<Order>>
+
+    @Query("SELECT * FROM user_addresses")
+    fun getAllAddresses(): LiveData<List<Address>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAddress(address: Address)
+
+    @Delete
+    suspend fun deleteAddress(address: Address)
+
+    @Query("UPDATE user_addresses SET isDefault = 0")
+    suspend fun resetDefaultAddresses()
 }

@@ -39,6 +39,17 @@ class CheckoutFragment : Fragment(R.layout.fragment_checkout) {
         viewModel.grandTotal.observe(viewLifecycleOwner) { total ->
             binding.tvFinalAmount.text = "₹${"%.2f".format(total)}"
         }
+        // Observe the selected address from the ViewModel
+        viewModel.selectedAddress.observe(viewLifecycleOwner) { address ->
+            binding.tvAddressTitle.text = address.title
+            binding.tvAddressDetails.text = "${address.streetAddress}, ${address.city}\n${address.phoneNumber}"
+        }
+
+        // Launch Address Picker
+        binding.ivEdit.setOnClickListener {
+            // Navigation to Address Management
+            findNavController().navigate(R.id.action_checkout_to_addressList)
+        }
         updatePaymentSelectionUI()
     }
 

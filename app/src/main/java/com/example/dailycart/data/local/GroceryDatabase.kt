@@ -5,8 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.dailycart.data.model.Order
+import com.example.dailycart.data.model.Address
 
-@Database(entities = [CartItem::class, Order::class], version = 4)
+
+@Database(entities = [CartItem::class, Order::class, Address::class], version = 5)
 abstract class GroceryDatabase : RoomDatabase(){
     abstract fun cartDao(): GroceryDao
 
