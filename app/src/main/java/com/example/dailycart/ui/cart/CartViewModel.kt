@@ -38,6 +38,12 @@ class CartViewModel(private val repository: GroceryRepository) : ViewModel() {
 
     // Address Actions
 
+    val addressAutoPicker = allAddresses.observeForever { addresses ->
+        if (_selectedAddress.value == null && !addresses.isNullOrEmpty()) {
+            // Pick the default address or the first one available
+            _selectedAddress.value = addresses.find { it.isDefault } ?: addresses.first()
+        }
+    }
     fun setAddress(address: Address) {
         _selectedAddress.value = address
     }
@@ -95,6 +101,9 @@ class CartViewModel(private val repository: GroceryRepository) : ViewModel() {
             repository.clearCart()
             _orderSuccess.postValue(true)
         }
+    }
+    override fun onCleared() {
+        super.onCleared()
     }
 
     fun resetOrderState() { _orderSuccess.value = false }

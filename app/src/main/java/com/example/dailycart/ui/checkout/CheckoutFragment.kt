@@ -27,6 +27,10 @@ class CheckoutFragment : Fragment(R.layout.fragment_checkout) {
         // and 'orderSuccess' state with the CartFragment
         viewModel = ViewModelProvider(requireActivity())[CartViewModel::class.java]
 
+        binding.ivEdit.setOnClickListener {
+            findNavController().navigate(R.id.action_checkout_to_addressList)
+        }
+
         setupUI()
         setupPaymentSelection()
         observeCheckoutStatus()
