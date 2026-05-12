@@ -85,7 +85,7 @@
         android:id="@+id/btnVerify"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:backgroundTint="#003D99"
+        android:backgroundTint="@color/primary"
         android:text="Verify &amp; Login"
         app:cornerRadius="12dp" />
 
