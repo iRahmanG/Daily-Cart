@@ -241,7 +241,7 @@
                 android:id="@+id/btnPlaceOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="56dp"
-                android:backgroundTint="@color/primary_container"
+                android:backgroundTint="@color/secondary"
                 android:text="Place Order"
                 app:cornerRadius="12dp" />
         </LinearLayout>

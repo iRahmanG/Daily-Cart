@@ -22,8 +22,7 @@
         android:layout_height="64dp"
         android:background="@color/white"
         app:elevation="16dp"
-        app:itemIconTint="#003D99"
-        app:itemTextColor="#003D99"
+        app:itemIconTint="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
