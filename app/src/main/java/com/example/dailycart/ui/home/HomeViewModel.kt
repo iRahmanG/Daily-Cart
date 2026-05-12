@@ -19,14 +19,30 @@ class HomeViewModel(private val repository: GroceryRepository) : ViewModel() {
     private val _products = MutableLiveData<List<Product>>()
     val products: LiveData<List<Product>> = _products
 
+    private var allProductsList = listOf<Product>()
+
+    private val _isSearchResultsEmpty = MutableLiveData<Boolean>(false)
+    val isSearchResultsEmpty: LiveData<Boolean> = _isSearchResultsEmpty
+
     init {
         loadHomeData()
     }
 
     private fun loadHomeData() {
-        // Fetching from our Constants provider
         _categories.value = Constants.getCategories()
-        _products.value = Constants.getProducts()
+        allProductsList = Constants.getProducts()
+        _products.value = allProductsList
+    }
+
+    fun performSearch(query: String) {
+        val filteredList = if (query.isEmpty()) {
+            allProductsList // Resets to full list when text is deleted
+        } else {
+            allProductsList.filter { it.name.contains(query, ignoreCase = true) }
+        }
+
+        _products.value = filteredList
+        _isSearchResultsEmpty.value = filteredList.isEmpty()
     }
 
     fun addToCart(product: Product) {

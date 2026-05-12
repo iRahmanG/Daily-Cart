@@ -3,6 +3,7 @@ package com.example.dailycart.ui.home
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -20,7 +21,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var sharedCartViewModel: CartViewModel // Shared for address
+    private lateinit var sharedCartViewModel: CartViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,19 +30,27 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val database = GroceryDatabase.getInstance(requireContext())
         val repository = GroceryRepository(database.cartDao())
 
-        // Home Data
         val homeFactory = HomeViewModelFactory(repository)
         homeViewModel = ViewModelProvider(this, homeFactory)[HomeViewModel::class.java]
 
-        // Shared Address State
         val cartFactory = CartViewModelFactory(repository)
         sharedCartViewModel = ViewModelProvider(requireActivity(), cartFactory)[CartViewModel::class.java]
 
         setupObservers()
+        setupListeners()
+        setupSearch()
+    }
 
-        // Open Address List on click
+    private fun setupListeners() {
         binding.llAddressBar.setOnClickListener {
             findNavController().navigate(R.id.addressListFragment)
+        }
+    }
+
+    private fun setupSearch() {
+        // Trigger search logic in ViewModel as user types
+        binding.etSearch.addTextChangedListener { text ->
+            homeViewModel.performSearch(text.toString().trim())
         }
     }
 
@@ -57,9 +66,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         }
 
-        // Display real selected address
         sharedCartViewModel.selectedAddress.observe(viewLifecycleOwner) { address ->
             binding.tvSelectedAddress.text = "Delivery to: ${address.title}"
+        }
+
+        // Handle the "Not Found" state UI
+        homeViewModel.isSearchResultsEmpty.observe(viewLifecycleOwner) { isEmpty ->
+            if (isEmpty) {
+                binding.rvProducts.visibility = View.GONE
+                binding.llEmptySearch.visibility = View.VISIBLE
+                binding.rvCategories.visibility = View.GONE
+            } else {
+                binding.rvProducts.visibility = View.VISIBLE
+                binding.llEmptySearch.visibility = View.GONE
+                binding.rvCategories.visibility = View.VISIBLE
+            }
         }
     }
 
