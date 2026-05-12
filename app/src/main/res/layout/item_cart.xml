@@ -18,7 +18,7 @@
             android:id="@+id/imgContainer"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            app:cardBackgroundColor="#F5F5F5"
+            app:cardBackgroundColor="@color/soft_border"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -28,8 +28,8 @@
             <ImageView
                 android:id="@+id/ivProduct"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="8dp"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/img_milk" />
         </com.google.android.material.card.MaterialCardView>
 

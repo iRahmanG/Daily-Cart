@@ -45,6 +45,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.llAddressBar.setOnClickListener {
             findNavController().navigate(R.id.addressListFragment)
         }
+        binding.tvSeeAllCategories.setOnClickListener {
+            homeViewModel.resetFilters()
+            Toast.makeText(requireContext(), "Showing all products", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupSearch() {
@@ -56,7 +60,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun setupObservers() {
         homeViewModel.categories.observe(viewLifecycleOwner) { list ->
-            binding.rvCategories.adapter = CategoryAdapter(list)
+            binding.rvCategories.adapter = CategoryAdapter(list) { category ->
+                homeViewModel.filterByCategory(category.name)
+            }
+        }
+        homeViewModel.categories.observe(viewLifecycleOwner) { list ->
+            binding.rvCategories.adapter = CategoryAdapter(list) { category ->
+                homeViewModel.filterByCategory(category.name)
+                Toast.makeText(requireContext(), "Filtering: ${category.name}", Toast.LENGTH_SHORT).show()
+            }
         }
 
         homeViewModel.products.observe(viewLifecycleOwner) { list ->

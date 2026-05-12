@@ -20,6 +20,7 @@ class HomeViewModel(private val repository: GroceryRepository) : ViewModel() {
     val products: LiveData<List<Product>> = _products
 
     private var allProductsList = listOf<Product>()
+    private var currentCategory: String = "All"
 
     private val _isSearchResultsEmpty = MutableLiveData<Boolean>(false)
     val isSearchResultsEmpty: LiveData<Boolean> = _isSearchResultsEmpty
@@ -32,6 +33,22 @@ class HomeViewModel(private val repository: GroceryRepository) : ViewModel() {
         _categories.value = Constants.getCategories()
         allProductsList = Constants.getProducts()
         _products.value = allProductsList
+    }
+    // Filter by category
+    fun filterByCategory(categoryName: String) {
+        currentCategory = categoryName
+        val filtered = if (categoryName == "All") {
+            allProductsList
+        } else {
+            allProductsList.filter { it.category == categoryName } // Assumes Product has a category field
+        }
+        _products.value = filtered
+        _isSearchResultsEmpty.value = filtered.isEmpty()
+    }
+    fun resetFilters() {
+        currentCategory = "All"
+        _products.value = allProductsList
+        _isSearchResultsEmpty.value = false
     }
 
     fun performSearch(query: String) {

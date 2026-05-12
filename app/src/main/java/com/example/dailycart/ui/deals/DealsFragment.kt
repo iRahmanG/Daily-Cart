@@ -40,8 +40,8 @@ class DealsFragment : Fragment(R.layout.fragment_deals) {
 
     private fun setupFlashSaleGrid() {
         val dealItems = listOf(
-            CartItem(1, "Organic Red Apple", 144.0, "1KG", R.drawable.ic_fruit, 1, 180.0),
-            CartItem(2, "Robusta Bananas", 51.0, "6 Pice", R.drawable.img_banana, 1, 60.0),
+            CartItem(1, "Organic Apple", 144.0, "1KG", R.drawable.ic_fruit, 1, 180.0),
+            CartItem(2, "Banana", 51.0, "6 Pice", R.drawable.img_banana, 1, 60.0),
             CartItem(3, "Fresh Farm Tomatoes", 55.0, "1KG", R.drawable.img_tomato, 1, 65.0),
             CartItem(4, "Whole Organic Milk", 34.0, "1L", R.drawable.img_milk, 1, 48.0)
         )

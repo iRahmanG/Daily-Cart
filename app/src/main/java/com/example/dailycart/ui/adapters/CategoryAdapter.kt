@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dailycart.data.model.Category
 import com.example.dailycart.databinding.ItemCategoryBinding
 
-class CategoryAdapter(private val categories: List<Category>) :
+class CategoryAdapter(private val categories: List<Category>,
+                      private val onCategoryClick: (Category) -> Unit) :
     RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     class CategoryViewHolder(val binding: ItemCategoryBinding) :
@@ -24,6 +25,7 @@ class CategoryAdapter(private val categories: List<Category>) :
         holder.binding.apply {
             tvCategoryName.text = category.name
             ivCategoryIcon.setImageResource(category.iconRes)
+            root.setOnClickListener { onCategoryClick(category) }
         }
     }
 
