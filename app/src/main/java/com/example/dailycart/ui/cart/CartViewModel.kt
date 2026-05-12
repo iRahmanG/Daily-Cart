@@ -5,6 +5,7 @@ import com.example.dailycart.data.Repository.GroceryRepository
 import com.example.dailycart.data.local.CartItem
 import com.example.dailycart.data.model.Address
 import com.example.dailycart.data.model.Order
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -89,6 +90,7 @@ class CartViewModel(private val repository: GroceryRepository) : ViewModel() {
             val currentItems = cartItems.value ?: return@launch
             val total = grandTotal.value ?: 0.0
             val delivery = deliveryCharge.value ?: 0.0
+            val address = selectedAddress.value ?: return@launch
 
             val newOrder = Order(
                 orderId = "OX-${(10000..99999).random()}",
@@ -96,7 +98,9 @@ class CartViewModel(private val repository: GroceryRepository) : ViewModel() {
                 deliveryCharge = delivery,
                 timestamp = System.currentTimeMillis(),
                 itemCount = currentItems.sumOf { it.quantity },
-                paymentMethod = paymentMethod
+                paymentMethod = paymentMethod,
+                deliveryAddress = "${address.title}: ${address.streetAddress}, ${address.city}",
+                itemsJson = Gson().toJson(currentItems) // Serialize list to JSON string
             )
 
             repository.saveOrder(newOrder)

@@ -8,7 +8,7 @@ import com.example.dailycart.data.model.Order
 import com.example.dailycart.data.model.Address
 
 
-@Database(entities = [CartItem::class, Order::class, Address::class], version = 5)
+@Database(entities = [CartItem::class, Order::class, Address::class], version = 6)
 abstract class GroceryDatabase : RoomDatabase(){
     abstract fun cartDao(): GroceryDao
 

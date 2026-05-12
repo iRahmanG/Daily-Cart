@@ -30,8 +30,20 @@
     <fragment
         android:id="@+id/ordersFragment"
         android:name="com.example.dailycart.ui.order.OrdersFragment"
-        android:label="Orders"
-        tools:layout="@layout/fragment_orders" />
+        android:label="My Orders">
+        <action
+            android:id="@+id/action_orders_to_orderDetails"
+            app:destination="@+id/orderDetailsFragment" />
+        <action
+            android:id="@+id/action_orders_to_addressList"
+            app:destination="@+id/addressListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.example.dailycart.ui.order.OrderDetailsFragment"
+        android:label="Order Details"
+        tools:layout="@layout/fragment_order_details" />
 
     <fragment
         android:id="@+id/checkoutFragment"
